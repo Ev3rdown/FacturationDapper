@@ -23,6 +23,7 @@ else
                 <th>Date de règlement attendue</th>
                 <th>Montant total du</th>
                 <th>Montant total réglé</th>
+                <th>Details</th>
             </tr>
         </thead>
         <tbody>
@@ -39,8 +40,31 @@ else
             }
         </tbody>
     </table>
+    <h3>@totalA</h3>
+    <h3>@totalR</h3>
 }
 
 @code {
-    
+    private string totalA="";
+    private string totalR="";
+    protected override void OnInitialized() // = On Page Load
+    {
+        @*double totalAttendu = 0;
+        double totalReel = 0;
+        foreach (var facture in data.Factures)
+        {
+            if (facture.DateAttenduReglement.Year == DateTime.Today.Year && facture.DateAttenduReglement.Month == DateTime.Today.Month)
+            {
+                totalAttendu += facture.MontantDu;
+                totalReel += facture.MontantRegle;
+            }
+        }
+        totalA = "Total attendu pour "+DateTime.Today.ToString("MMMM")+":"+ totalAttendu.ToString();
+        totalR = "Total réel pour " + DateTime.Today.ToString("MMMM") + ":" + totalReel.ToString();*@
+    Tuple<double, double> tup = data.CalculerTotalAttenduEtReel(DateTime.Today.Month, DateTime.Today.Year);
+    totalA = "Total attendu pour " + DateTime.Today.ToString("MMMM") + ":" + tup.Item1.ToString();
+    totalR = "Total réel pour " + DateTime.Today.ToString("MMMM") + ":" + tup.Item2.ToString();
+
+}
+
 }
