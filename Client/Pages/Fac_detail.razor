@@ -1,0 +1,49 @@
+﻿@page "/facture/{identifiant}"
+
+@using Facturation.Shared
+
+@inject NavigationManager nav;
+@inject IBusinessData data;
+
+<h1>Facture</h1>
+
+<p>Détail de la facture</p>
+
+@if (data.Factures == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <td>Numéro de facture</td><td>@facture.NumeroFacture</td>
+        </tr>
+        <tr>
+            <th>Nom du client</th><td>@facture.NomClient</td>
+        </tr> 
+        <tr>
+            <th>Date d'émission</th><td>@facture.DateEmission.ToString("dd MMMM yyyy")</td>
+        </tr>
+        <tr>
+            <th>Date de règlement attendue</th><td>@facture.DateAttenduReglement.ToString("dd MMMM yyyy")</td>
+        </tr>
+        <tr>
+            <th>Montant total du</th><td>@facture.MontantDu</td>
+        </tr>
+        <tr>
+            <th>Montant total réglé</th><td>@facture.MontantRegle</td>
+        </tr>
+    </table>
+}
+
+@code {
+    [Parameter]
+    public string identifiant { get; set; }
+    private Facture facture;
+    protected override void OnInitialized() // = On Page Load
+    {
+        facture = data.Factures.Where(f => f.NumeroFacture == identifiant).FirstOrDefault();
+    }
+
+}

@@ -29,14 +29,15 @@ else
         <tbody>
             @foreach (var facture in data.Factures)
             {
-                <tr>
-                    <td>@facture.NumeroFacture</td>
-                    <td>@facture.NomClient</td>
-                    <td>@facture.DateEmission.ToString("dd MMMM yyyy")</td>
-                    <td>@facture.DateAttenduReglement.ToString("dd MMMM yyyy")</td>
-                    <td>@facture.MontantDu</td>
-                    <td>@facture.MontantRegle</td>
-                </tr>
+            <tr>
+                <td>@facture.NumeroFacture</td>
+                <td>@facture.NomClient</td>
+                <td>@facture.DateEmission.ToString("dd MMMM yyyy")</td>
+                <td>@facture.DateAttenduReglement.ToString("dd MMMM yyyy")</td>
+                <td>@facture.MontantDu</td>
+                <td>@facture.MontantRegle</td>
+                <td><a href="facture/@facture.NumeroFacture"><span class="oi oi-external-link"></span></a></td>
+            </tr>
             }
         </tbody>
     </table>

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facturation.Server", "Server\Facturation.Server.csproj", "{7D68ABEE-D931-4795-AF21-FBD38686D567}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Facturation.Server", "Server\Facturation.Server.csproj", "{7D68ABEE-D931-4795-AF21-FBD38686D567}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facturation.Client", "Client\Facturation.Client.csproj", "{7874ABD3-21C7-4A0C-902A-BE4D81439FED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Facturation.Client", "Client\Facturation.Client.csproj", "{7874ABD3-21C7-4A0C-902A-BE4D81439FED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facturation.Shared", "Shared\Facturation.Shared.csproj", "{D3CB6485-BA6B-4534-A04F-F15115E5DDBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Facturation.Shared", "Shared\Facturation.Shared.csproj", "{D3CB6485-BA6B-4534-A04F-F15115E5DDBD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
