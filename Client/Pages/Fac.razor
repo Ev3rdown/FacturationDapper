@@ -1,0 +1,46 @@
+﻿@page "/factures"
+
+@using Facturation.Shared
+
+@inject IBusinessData data;
+
+<h1>Factures</h1>
+
+<p>Liste des factures</p>
+
+@if (data.Factures == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Numéro de facture</th>
+                <th>Nom du client</th>
+                <th>Date d'émission</th>
+                <th>Date de règlement attendue</th>
+                <th>Montant total du</th>
+                <th>Montant total réglé</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var facture in data.Factures)
+            {
+                <tr>
+                    <td>@facture.NumeroFacture</td>
+                    <td>@facture.NomClient</td>
+                    <td>@facture.DateEmission.ToString("dd MMMM yyyy")</td>
+                    <td>@facture.DateAttenduReglement.ToString("dd MMMM yyyy")</td>
+                    <td>@facture.MontantDu</td>
+                    <td>@facture.MontantRegle</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    
+}
