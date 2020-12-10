@@ -19,22 +19,11 @@ namespace Facturation.Shared
             };
 
         }
-        public double CalculerTotalAttendu()
-        {
-            double totalAttendu=0;
-            foreach (var facture in Factures) totalAttendu += facture.MontantDu;    
-            return totalAttendu;
-        }
-        public double CalculerTotalReel()
-        {
-            double totalReel = 0;
-            foreach (var facture in Factures) totalReel += facture.MontantRegle;
-            return totalReel;
-        }
         public Tuple<double, double> CalculerTotalAttenduEtReel()
         {
             double totalAttendu = 0;
             double totalReel = 0;
+            
             foreach (var facture in Factures)
             {
                 totalAttendu += facture.MontantDu;

@@ -6,12 +6,6 @@ namespace Facturation.Shared
 {
     public class Facture
     {
-        public string NumeroFacture;
-        public string NomClient;
-        public DateTime DateEmission;
-        public DateTime DateAttenduReglement;
-        public double MontantDu;
-        public double MontantRegle;
         public Facture(string num,string nomC,DateTime emis,DateTime attendu,double du,double regle=0)
         {
             NumeroFacture = num;
@@ -21,5 +15,11 @@ namespace Facturation.Shared
             MontantDu = du;
             MontantRegle = regle;
         }
+        public string NumeroFacture { get; }
+        public string NomClient { get; }
+        public DateTime DateEmission { get; }
+        public DateTime DateAttenduReglement { get; }
+        public double MontantDu { get; }
+        public double MontantRegle { get; }
     }
 }
