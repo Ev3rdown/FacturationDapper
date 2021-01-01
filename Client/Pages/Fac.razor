@@ -1,14 +1,16 @@
 ﻿@page "/factures"
 
-@using Facturation.Shared
+@using Facturation.Shared;  
 
-@inject IBusinessData data;
+@*@inject IBusinessData data;*@
+@inject HttpClient http
 
 <h1>Factures</h1>
 
 <p>Liste des factures</p>
 
-@if (data.Factures == null)
+@*@if (data.Factures == null)*@
+@if (factures == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -27,17 +29,18 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var facture in data.Factures)
+            @*@foreach (var facture in data.Factures)*@
+            @foreach (var facture in factures)
             {
-            <tr>
-                <td>@facture.NumeroFacture</td>
-                <td>@facture.NomClient</td>
-                <td>@facture.DateEmission.ToString("dd MMMM yyyy")</td>
-                <td>@facture.DateAttenduReglement.ToString("dd MMMM yyyy")</td>
-                <td>@facture.MontantDu</td>
-                <td>@facture.MontantRegle</td>
-                <td><a href="facture/@facture.NumeroFacture"><span class="oi oi-external-link"></span></a></td>
-            </tr>
+                <tr>
+                    <td>@facture.NumeroFacture</td>
+                    <td>@facture.NomClient</td>
+                    <td>@facture.DateEmission.ToString("dd MMMM yyyy")</td>
+                    <td>@facture.DateAttenduReglement.ToString("dd MMMM yyyy")</td>
+                    <td>@facture.MontantDu</td>
+                    <td>@facture.MontantRegle</td>
+                    <td><a href="facture/@facture.NumeroFacture"><span class="oi oi-external-link"></span></a></td>
+                </tr>
             }
         </tbody>
     </table>
@@ -46,14 +49,20 @@ else
 }
 
 @code {
-    private string totalA="";
-    private string totalR="";
-    protected override void OnInitialized() // = On Page Load
-    {
-        Tuple<double, double> tup = data.CalculerTotalAttenduEtReel(DateTime.Today.Month, DateTime.Today.Year);
-        totalA = "Total attendu pour " + DateTime.Today.ToString("MMMM") + ":" + tup.Item1.ToString();
-        totalR = "Total réel pour " + DateTime.Today.ToString("MMMM") + ":" + tup.Item2.ToString();
+    private string totalA = "";
+    private string totalR = "";
+    @*protected override void OnInitialized() // = On Page Load
+        {
+            Tuple<double, double> tup = data.CalculerTotalAttenduEtReel(DateTime.Today.Month, DateTime.Today.Year);
+            totalA = "Total attendu pour " + DateTime.Today.ToString("MMMM") + ":" + tup.Item1.ToString();
+            totalR = "Total réel pour " + DateTime.Today.ToString("MMMM") + ":" + tup.Item2.ToString();
 
+        }*@
+    private IEnumerable<Facture> factures = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        factures = await http.GetFromJsonAsync<IEnumerable<Facture>>("api/factures");
     }
 
 }

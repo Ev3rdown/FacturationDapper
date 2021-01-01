@@ -4,34 +4,35 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Facturation.Server.Controllers
+namespace Invoicing.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class FacturesController : ControllerBase
     {
-        private readonly ILogger<FacturesController> logger;
-        private readonly IBusinessData data;
+        private readonly ILogger<FacturesController> _logger;
+        private readonly IBusinessData _data;
 
-        public FacturesController(ILogger<FacturesController> logger)
+        public FacturesController(ILogger<FacturesController> logger, IBusinessData data)
         {
-            this.logger = logger;
+            _logger = logger;
+            _data = data;
         }
 
         [HttpGet]
         public IEnumerable<Facture> Get()
         {
-            return data.Factures;
+            return _data.Factures;
         }
 
         [HttpGet("{reference}")]
         public ActionResult<Facture> Get(string reference)
         {
-            var facture = data.Factures.Where(inv => inv.NumeroFacture == reference).FirstOrDefault();
+            var invoice = _data.Factures.Where(inv => inv.NumeroFacture == reference).FirstOrDefault();
 
-            if (facture != null)
+            if (invoice != null)
             {
-                return facture;
+                return invoice;
             }
             else
             {
@@ -44,11 +45,12 @@ namespace Facturation.Server.Controllers
         {
             if (ModelState.IsValid)
             {
+                // TODO : Ajouter la nouvelle facture à la collection
                 return Created($"factures/{newFacture.NumeroFacture}", newFacture);
             }
             else
             {
-                return BadRequest();
+                return BadRequest(ModelState.Values);
             }
         }
     }
