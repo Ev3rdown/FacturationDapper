@@ -28,11 +28,11 @@ namespace Invoicing.Server.Controllers
         [HttpGet("{reference}")]
         public ActionResult<Facture> Get(string reference)
         {
-            var invoice = _data.Factures.Where(inv => inv.NumeroFacture == reference).FirstOrDefault();
+            var facture = _data.Factures.Where(inv => inv.NumeroFacture == reference).FirstOrDefault();
 
-            if (invoice != null)
+            if (facture != null)
             {
-                return invoice;
+                return facture;
             }
             else
             {

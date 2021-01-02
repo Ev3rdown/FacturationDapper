@@ -1,0 +1,22 @@
+﻿@page "/dashboard"
+
+@inject HttpClient http
+
+
+<h1>Dashboard factures :</h1>
+
+<h3>@totalA</h3>
+<h3>@totalR</h3>
+
+@code {
+    private string totalA = "";
+    private string totalR = "";
+    private Dashboard dash = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        dash = await http.GetFromJsonAsync<Dashboard>("api/dashboard");
+        totalA = "Total attendu pour " + DateTime.Today.ToString("MMMM") + ": " + dash.TotalAttendu.ToString()+"€";
+        totalR = "Total réel pour " + DateTime.Today.ToString("MMMM") + ": " + dash.TotalReel.ToString()+"€";
+    }
+}

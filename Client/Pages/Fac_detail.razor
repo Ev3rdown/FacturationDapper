@@ -3,13 +3,13 @@
 @using Facturation.Shared
 
 @inject NavigationManager nav;
-@inject IBusinessData data;
+@inject HttpClient http;
 
 <h1>Facture</h1>
 
 <p>Détail de la facture</p>
 
-@if (data.Factures == null)
+@if (facture == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -17,22 +17,28 @@ else
 {
     <table class="table">
         <tr>
-            <td>Numéro de facture</td><td>@facture.NumeroFacture</td>
+            <td>Numéro de facture</td>
+            <td>@facture.NumeroFacture</td>
         </tr>
         <tr>
-            <th>Nom du client</th><td>@facture.NomClient</td>
-        </tr> 
-        <tr>
-            <th>Date d'émission</th><td>@facture.DateEmission.ToString("dd MMMM yyyy")</td>
+            <th>Nom du client</th>
+            <td>@facture.NomClient</td>
         </tr>
         <tr>
-            <th>Date de règlement attendue</th><td>@facture.DateAttenduReglement.ToString("dd MMMM yyyy")</td>
+            <th>Date d'émission</th>
+            <td>@facture.DateEmission.ToString("dd MMMM yyyy")</td>
         </tr>
         <tr>
-            <th>Montant total du</th><td>@facture.MontantDu</td>
+            <th>Date de règlement attendue</th>
+            <td>@facture.DateAttenduReglement.ToString("dd MMMM yyyy")</td>
         </tr>
         <tr>
-            <th>Montant total réglé</th><td>@facture.MontantRegle</td>
+            <th>Montant total du</th>
+            <td>@facture.MontantDu</td>
+        </tr>
+        <tr class='@colorFromFacture(facture)'>
+            <th>Montant total réglé</th>
+            <td>@facture.MontantRegle</td>
         </tr>
     </table>
 }
@@ -40,9 +46,24 @@ else
 @code {
     [Parameter]
     public string identifiant { get; set; }
+
     private Facture facture;
-    protected override void OnInitialized() // = On Page Load
+    protected override async Task OnInitializedAsync()
     {
-        facture = data.Factures.Where(f => f.NumeroFacture == identifiant).FirstOrDefault();
+        try
+        {
+            facture = await http.GetFromJsonAsync<Facture>("api/factures/" + identifiant);
+        }
+        catch (System.Net.Http.HttpRequestException)
+        {
+            nav.NavigateTo("/");
+        }
+    }
+    static string colorFromFacture(Facture facture)
+    {
+        if (facture.estPaye) return "table-success";
+        if (facture.enRetard) return "table-danger";
+        if (facture.MontantRegle > 0) return "table-default";
+        return "table-warning";
     }
 }
