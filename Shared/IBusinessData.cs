@@ -6,10 +6,10 @@ namespace Facturation.Shared
 {
     public interface IBusinessData 
     {
-        public IEnumerable<Facture> Factures { get; }
-        public Tuple<double, double> CalculerTotalAttenduEtReel();
-        public Tuple<double,double> CalculerTotalAttenduEtReel(int mois,int annee);
-
+        IEnumerable<Facture> Factures { get; }
+        Tuple<double, double> CalculerTotalAttenduEtReel();
+        Tuple<double,double> CalculerTotalAttenduEtReel(int mois,int annee);
+        void Add(Facture facture);
 
     }
 }

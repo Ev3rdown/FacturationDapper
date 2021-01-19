@@ -31,6 +31,10 @@ namespace Facturation.Shared
             MontantDu = montantDu;
             MontantRegle = montantRegle;
         }
+        public Facture()
+        {
+
+        }
         public bool estPaye => MontantRegle >= MontantDu;
         public bool enRetard => DateAttenduReglement < DateTime.Now;
     }

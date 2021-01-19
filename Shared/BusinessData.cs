@@ -49,6 +49,10 @@ namespace Facturation.Shared
             }
             return Tuple.Create(totalAttendu, totalReel);
         }
+        public void Add(Facture facture)
+        {
+            (Factures as List<Facture>).Add(facture);
+        }
     }
 }
 
